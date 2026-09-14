@@ -1,0 +1,6 @@
+{
+  "name": "Two Spoons Uttara - Restaurant & Chocolate Cafe",
+  "description": "Two Spoons Uttara - a restaurant and chocolate cafe on Gareeb-e-Nawaz Avenue, Sector 13, Uttara, Dhaka. Continental food, steaks, pasta, crepes and waffles. Open 11 AM to 2 AM. Rated 4.3 on Google.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
