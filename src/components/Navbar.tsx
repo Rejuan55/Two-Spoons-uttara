@@ -1,265 +1,188 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Phone, 
-  Utensils, 
-  Instagram, 
-  Facebook, 
-  Menu as MenuIcon, 
-  X, 
+  Calendar, 
   Clock, 
-  MapPin,
-  CalendarCheck
+  Menu, 
+  X, 
+  Sparkles, 
+  ShieldCheck, 
+  ChevronRight 
 } from 'lucide-react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { CLINIC_INFO } from '../data/dentalData';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenBooking: (doctorId?: string, procedure?: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('sec1');
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-
-      // Check active section
-      const sections = ['sec1', 'sec2', 'sec3', 'sec4', 'sec5', 'sec6'];
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#sec1', id: 'sec1' },
-    { name: 'About', href: '#sec2', id: 'sec2' },
-    { name: 'Menu', href: '#sec3', id: 'sec3' },
-    { name: 'Gallery', href: '#sec4', id: 'sec4' },
-    { name: 'Reservation', href: '#sec5', id: 'sec5' },
-    { name: 'Contact', href: '#sec6', id: 'sec6' },
+    { label: 'Services', href: '#services' },
+    { label: 'Video Guides', href: '#video-procedures' },
+    { label: 'Doctor Availability', href: '#doctors' },
+    { label: 'Real Results', href: '#before-after' },
+    { label: 'Reviews', href: '#reviews' },
+    { label: 'FAQs', href: '#faqs' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
     <>
-      {/* Top Utility Bar */}
-      <div id="top-bar" className="bg-[#0b0a09] border-b border-[#25221e] text-xs text-[#a39888] py-2 px-4 md:px-8 transition-colors hidden sm:block">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+      {/* Top Announcement Bar */}
+      <div className="bg-[#0A2558] text-slate-200 text-xs py-2 px-4 border-b border-blue-900/40 hidden md:block">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <a 
-              href={`tel:${RESTAURANT_INFO.phoneTel}`} 
-              id="top-phone-link"
-              className="flex items-center gap-2 hover:text-[#c59d5f] transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#c59d5f]" />
-              <span>{RESTAURANT_INFO.phone}</span>
-            </a>
-            <div className="flex items-center gap-2 text-[#80776b]">
-              <Clock className="w-3.5 h-3.5 text-[#c59d5f]" />
-              <span>Open Daily: 11:00 AM – 02:00 AM</span>
-            </div>
-            <div className="flex items-center gap-2 text-[#80776b] hidden lg:flex">
-              <MapPin className="w-3.5 h-3.5 text-[#c59d5f]" />
-              <span>Sector 13, Uttara, Dhaka</span>
-            </div>
+            <span className="flex items-center gap-1.5 text-slate-300">
+              <Clock className="w-3.5 h-3.5 text-teal-400" />
+              <span>{CLINIC_INFO.workingHours.weekdays}</span>
+            </span>
+            <span className="text-slate-500">·</span>
+            <span className="flex items-center gap-1.5 text-slate-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-teal-400" />
+              <span>Certified 3D Digital Diagnostic Dental Center</span>
+            </span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-[#6e665d] text-[11px] uppercase tracking-wider">Connect:</span>
+          <div className="flex items-center gap-4 text-slate-300">
+            <span>24/7 Dental Emergency Hotline:</span>
             <a 
-              href={RESTAURANT_INFO.facebook} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              id="top-facebook-link"
-              aria-label="Facebook"
-              className="hover:text-[#c59d5f] transition-colors p-1"
+              href={`tel:${CLINIC_INFO.emergencyPhone}`} 
+              className="text-teal-300 font-semibold hover:text-white transition-colors flex items-center gap-1"
             >
-              <Facebook className="w-3.5 h-3.5" />
-            </a>
-            <a 
-              href={RESTAURANT_INFO.instagram} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              id="top-instagram-link"
-              aria-label="Instagram"
-              className="hover:text-[#c59d5f] transition-colors p-1"
-            >
-              <Instagram className="w-3.5 h-3.5" />
-            </a>
-            <a 
-              href={RESTAURANT_INFO.foodpanda} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              id="top-foodpanda-link"
-              aria-label="Order on Foodpanda"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#d61355]/20 text-[#ff4b82] border border-[#d61355]/40 hover:bg-[#d61355] hover:text-white transition-all text-[11px] font-medium ml-2"
-            >
-              <Utensils className="w-3 h-3" />
-              <span>Order Foodpanda</span>
+              <Phone className="w-3 h-3 text-teal-400" />
+              {CLINIC_INFO.emergencyPhone}
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Sticky Navbar */}
+      {/* Main Navigation Bar */}
       <header 
-        id="main-header"
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-40 transition-all duration-200 ${
           isScrolled 
-            ? 'bg-[#121110]/95 backdrop-blur-md shadow-2xl border-b border-[#2a2620] py-3' 
-            : 'bg-[#121110]/80 backdrop-blur-sm border-b border-[#25221e]/50 py-4'
+            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 py-3.5' 
+            : 'bg-white border-b border-slate-100 py-4'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
-          {/* Logo with Two Spoons Motif */}
-          <a href="#sec1" id="nav-brand-logo" className="group flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full border border-[#c59d5f]/60 flex items-center justify-center bg-[#1a1714] text-[#c59d5f] shadow-[0_0_15px_rgba(197,157,95,0.15)] group-hover:border-[#c59d5f] group-hover:shadow-[0_0_20px_rgba(197,157,95,0.3)] transition-all">
-              {/* Elegant crossed spoons icon */}
-              <div className="relative w-6 h-6 flex items-center justify-center">
-                <Utensils className="w-4 h-4 text-[#c59d5f]" />
-              </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          
+          {/* Zone 1: Brand Wordmark */}
+          <a href="#" className="flex items-center gap-2.5 group">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0A2558] to-[#0D9488] flex items-center justify-center text-white shadow-md shadow-blue-900/10 group-hover:scale-105 transition-transform">
+              <Sparkles className="w-5 h-5 text-teal-200" />
             </div>
-            <div className="flex flex-col">
-              <span className="font-display tracking-[0.2em] text-lg font-bold text-[#f2ede4] group-hover:text-[#c59d5f] transition-colors leading-tight">
-                TWO SPOONS
-              </span>
-              <span className="text-[10px] tracking-[0.18em] uppercase text-[#a89d8d] font-medium">
-                Uttara • Dhaka
-              </span>
+            <div>
+              <div className="flex items-center gap-1">
+                <span className="text-2xl font-extrabold tracking-tight text-[#0A2558] font-display">
+                  Smilico
+                </span>
+                <span className="w-2 h-2 rounded-full bg-teal-500 inline-block mb-1"></span>
+              </div>
+              <p className="text-[10px] tracking-wider uppercase text-slate-700 font-semibold -mt-1">
+                Dental &amp; Diagnostic Care
+              </p>
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav id="desktop-navigation" className="hidden md:flex items-center gap-8">
-            <ul className="flex items-center gap-6 lg:gap-8">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.id;
-                return (
-                  <li key={link.id}>
-                    <a
-                      href={link.href}
-                      id={`nav-link-${link.id}`}
-                      className={`text-xs uppercase tracking-[0.16em] font-medium transition-all relative py-1 ${
-                        isActive 
-                          ? 'text-[#c59d5f]' 
-                          : 'text-[#d4cbbe] hover:text-[#c59d5f]'
-                      }`}
-                    >
-                      {link.name}
-                      {isActive && (
-                        <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c59d5f] rounded-full" />
-                      )}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* Book Table / Order CTA */}
-            <div className="flex items-center gap-3 ml-2">
+          {/* Zone 2: Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+            {navLinks.map((link) => (
               <a
-                href="#sec5"
-                id="nav-book-btn"
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-sm bg-[#c59d5f] text-[#121110] hover:bg-[#d6af71] transition-all shadow-[0_4px_12px_rgba(197,157,95,0.2)] hover:shadow-[0_6px_16px_rgba(197,157,95,0.35)]"
+                key={link.label}
+                href={link.href}
+                className="hover:text-[#0A2558] transition-colors relative py-1 hover:border-b-2 hover:border-teal-500"
               >
-                <CalendarCheck className="w-3.5 h-3.5" />
-                <span>Book Table</span>
+                {link.label}
               </a>
-              <a
-                href={RESTAURANT_INFO.foodpanda}
-                target="_blank"
-                rel="noopener noreferrer"
-                id="nav-order-btn"
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-sm border border-[#c59d5f]/50 text-[#c59d5f] hover:bg-[#c59d5f]/10 transition-all"
-              >
-                <span>Order</span>
-              </a>
-            </div>
+            ))}
           </nav>
 
-          {/* Mobile Menu Toggle Button */}
-          <div className="flex items-center gap-3 md:hidden">
+          {/* Zone 3: Actions */}
+          <div className="hidden sm:flex items-center gap-4">
             <a
-              href={`tel:${RESTAURANT_INFO.phoneTel}`}
-              id="mobile-quick-call"
-              className="p-2 rounded-full border border-[#c59d5f]/40 text-[#c59d5f]"
-              aria-label="Call Two Spoons"
+              href={`tel:${CLINIC_INFO.phone}`}
+              className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-teal-700 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100"
             >
-              <Phone className="w-4 h-4" />
+              <div className="w-7 h-7 rounded-full bg-teal-50 text-teal-700 flex items-center justify-center">
+                <Phone className="w-3.5 h-3.5" />
+              </div>
+              <span className="hidden xl:inline">{CLINIC_INFO.phone}</span>
             </a>
+
             <button
-              type="button"
-              id="mobile-menu-toggle"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md border border-[#332e27] text-[#e0d6c8] hover:text-[#c59d5f] transition-colors"
-              aria-label="Toggle navigation menu"
+              onClick={() => onOpenBooking()}
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#0A2558] to-[#0e3a8a] text-white text-xs font-semibold rounded-lg shadow-md shadow-blue-950/20 hover:from-[#081e46] hover:to-[#0a2e6f] active:scale-95 transition-all whitespace-nowrap cursor-pointer"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+              <Calendar className="w-3.5 h-3.5 text-teal-300" />
+              <span>Book Appointment</span>
             </button>
           </div>
+
+          {/* Mobile Menu Hamburger */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <button
+              onClick={() => onOpenBooking()}
+              className="px-3 py-2 bg-[#0A2558] text-white text-xs font-semibold rounded-lg"
+            >
+              Book
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div id="mobile-menu-drawer" className="md:hidden bg-[#161412] border-b border-[#2b2721] px-6 py-6 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-            <ul className="space-y-4 mb-6">
+          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-4 pb-6 mt-3 shadow-xl animate-fadeIn">
+            <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
-                <li key={link.id}>
-                  <a
-                    href={link.href}
-                    id={`mobile-nav-link-${link.id}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-sm uppercase tracking-widest font-medium text-[#d9cfc1] hover:text-[#c59d5f] py-1 border-b border-[#221f1a]"
-                  >
-                    {link.name}
-                  </a>
-                </li>
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between text-base font-medium text-slate-700 hover:text-[#0A2558] py-2 border-b border-slate-100"
+                >
+                  <span>{link.label}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </a>
               ))}
-            </ul>
-
-            <div className="flex flex-col gap-3 pt-2">
-              <a
-                href="#sec5"
-                id="mobile-nav-book-btn"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 rounded-sm bg-[#c59d5f] text-[#121110] font-semibold text-xs tracking-wider uppercase"
-              >
-                Make a Reservation
-              </a>
-              <a
-                href={RESTAURANT_INFO.foodpanda}
-                target="_blank"
-                rel="noopener noreferrer"
-                id="mobile-nav-foodpanda-btn"
-                className="w-full text-center py-2.5 rounded-sm border border-[#c59d5f] text-[#c59d5f] font-semibold text-xs tracking-wider uppercase"
-              >
-                Order on Foodpanda
-              </a>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-[#25221d] flex justify-around text-xs text-[#a39786]">
-              <a href={`tel:${RESTAURANT_INFO.phoneTel}`} className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-[#c59d5f]" />
-                <span>01304-672621</span>
-              </a>
-              <a href={RESTAURANT_INFO.facebook} target="_blank" rel="noreferrer" className="hover:text-[#c59d5f]">
-                Facebook
-              </a>
-              <a href={RESTAURANT_INFO.instagram} target="_blank" rel="noreferrer" className="hover:text-[#c59d5f]">
-                Instagram
-              </a>
+              
+              <div className="pt-3 flex flex-col gap-2">
+                <a
+                  href={`tel:${CLINIC_INFO.phone}`}
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-200 text-slate-800 text-sm font-semibold"
+                >
+                  <Phone className="w-4 h-4 text-teal-600" />
+                  Call Clinic: {CLINIC_INFO.phone}
+                </a>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenBooking();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#0A2558] text-white text-sm font-semibold rounded-lg shadow"
+                >
+                  <Calendar className="w-4 h-4 text-teal-300" />
+                  Book An Appointment
+                </button>
+              </div>
             </div>
           </div>
         )}

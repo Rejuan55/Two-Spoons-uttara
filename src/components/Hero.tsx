@@ -1,112 +1,175 @@
 import React from 'react';
-import { ChevronDown, Star, Clock, MapPin, Calendar, Sparkles } from 'lucide-react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { 
+  Play, 
+  Calendar, 
+  Star, 
+  ShieldCheck, 
+  Sparkles, 
+  CheckCircle2, 
+  Activity, 
+  HeartHandshake 
+} from 'lucide-react';
+import { CLINIC_INFO } from '../data/dentalData';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onOpenBooking: () => void;
+  onOpenStoryVideo: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenStoryVideo }) => {
   return (
-    <section 
-      id="sec1" 
-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-[#0d0c0b]"
-    >
-      {/* Background with Dark Atmospheric Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 opacity-40 mix-blend-luminosity"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=2000&q=85')`
-        }}
-      />
-      {/* Radial vignette overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#121110]/80 via-[#121110]/60 to-[#121110]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#121110]/70 to-[#121110]" />
+    <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-slate-50 pt-8 pb-16 lg:pt-14 lg:pb-24 border-b border-slate-100">
+      {/* Background Decorative Accents */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-blue-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Hero Content Container */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-20 text-center flex flex-col items-center">
-        {/* Subtle Decorative Arch / Half-Circle */}
-        <div className="mb-4 flex flex-col items-center">
-          <div className="w-16 h-8 border-t-2 border-x-2 border-[#c59d5f]/70 rounded-t-full flex items-center justify-center pt-2">
-            <Sparkles className="w-4 h-4 text-[#c59d5f] animate-pulse" />
-          </div>
-          {/* Gold Separator with Diamond */}
-          <div className="flex items-center gap-3 my-3">
-            <span className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-[#c59d5f]" />
-            <span className="w-2 h-2 rotate-45 border border-[#c59d5f] bg-[#c59d5f]/40" />
-            <span className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-[#c59d5f]" />
-          </div>
-        </div>
-
-        {/* Location & Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#1e1a16]/80 border border-[#c59d5f]/30 text-[#e4dbcd] text-xs uppercase tracking-[0.2em] mb-6 backdrop-blur-md">
-          <MapPin className="w-3.5 h-3.5 text-[#c59d5f]" />
-          <span>Gareeb-e-Nawaz Avenue • Sector 13, Uttara</span>
-        </div>
-
-        {/* Hero Titles */}
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-[#fbf8f3] mb-4 drop-shadow-md">
-          Welcome to <span className="text-[#c59d5f] italic font-normal">Two Spoons</span>
-        </h1>
-
-        <p className="font-serif text-xl sm:text-2xl md:text-3xl text-[#d4c8b6] italic tracking-wide font-light mb-8 max-w-2xl">
-          “Happiness Begins Here”
-        </p>
-
-        {/* Descriptive Tagline */}
-        <p className="text-sm md:text-base text-[#a89d8f] max-w-2xl leading-relaxed mb-10">
-          A continental kitchen and chocolate cafe serving succulent steaks, baked pasta, 
-          crispy waffles, and molten chocolate desserts in Uttara, Dhaka.
-        </p>
-
-        {/* Highlights Pills: Google Rating + Hours */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-10 text-xs sm:text-sm">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-md bg-[#191714]/80 border border-[#2e2a24] text-[#ece4d8]">
-            <div className="flex text-[#ffb800]">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Column: Headline, Copy & CTAs */}
+          <div className="lg:col-span-7 space-y-6">
+            
+            {/* Trust Kicker - Clean unboxed typography per design constitution */}
+            <div className="flex items-center gap-2 text-xs font-semibold tracking-wide text-teal-800">
+              <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+              <span>Healthy Smiles Start Here</span>
+              <span aria-hidden="true" className="text-slate-600">·</span>
+              <span className="text-slate-700">Digital 3D Diagnostic Dental Care</span>
             </div>
-            <span className="font-semibold text-white">{RESTAURANT_INFO.googleRating}</span>
-            <span className="text-[#8e8477]">({RESTAURANT_INFO.reviewCount} Google reviews)</span>
+
+            {/* Display Headline */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0A2558] font-display tracking-tight leading-[1.15] text-balance">
+              Dedicated to Delivering{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A2558] via-teal-700 to-teal-900">
+                Gentle &amp; Reliable
+              </span>{' '}
+              Dental Treatments
+            </h1>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+              We combine ultra low-radiation 3D diagnostic technology with compassionate, gentle dentistry. Experience pain-free teeth scaling, aesthetic aligners, single-visit implants, and lifetime oral wellness.
+            </p>
+
+            {/* Key Diagnostic Proof Bullets */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-sm text-slate-700">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                <span>Painless ultrasonic teeth scaling</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                <span>3D CBCT digital bone &amp; nerve scan</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                <span>Real-time doctor schedule booking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                <span>Transparent pricing, no surprises</span>
+              </div>
+            </div>
+
+            {/* CTAs & Video Story */}
+            <div className="flex flex-wrap items-center gap-4 pt-3">
+              <button
+                onClick={onOpenBooking}
+                className="px-7 py-3.5 bg-[#0A2558] text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-900/25 hover:bg-[#081e46] active:scale-95 transition-all flex items-center gap-2.5 cursor-pointer"
+              >
+                <Calendar className="w-4 h-4 text-teal-300" />
+                <span>Book Doctor Appointment</span>
+              </button>
+
+              <button
+                onClick={onOpenStoryVideo}
+                className="flex items-center gap-3 px-5 py-3 rounded-xl border border-slate-200 bg-white/90 hover:bg-slate-50 text-slate-800 text-sm font-semibold transition-all group shadow-sm cursor-pointer"
+              >
+                <span className="w-9 h-9 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-md shadow-teal-500/30 group-hover:scale-110 transition-transform">
+                  <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                </span>
+                <span className="text-slate-800 group-hover:text-[#0A2558]">Watch Clinic Story</span>
+              </button>
+            </div>
+
+            {/* Social Proof Bar */}
+            <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center gap-6 text-xs text-slate-700 font-medium">
+              <div className="flex items-center gap-1.5">
+                <div className="flex text-amber-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="font-bold text-slate-900 text-sm">4.96/5</span>
+                <span className="text-slate-700">(850+ Verified Reviews)</span>
+              </div>
+              <span className="text-slate-600 hidden sm:inline">·</span>
+              <div className="flex items-center gap-1.5">
+                <HeartHandshake className="w-4 h-4 text-teal-700" />
+                <span>99.4% Pain-Free Satisfaction</span>
+              </div>
+            </div>
+
           </div>
 
-          <div className="flex items-center gap-2 px-4 py-2 rounded-md bg-[#191714]/80 border border-[#2e2a24] text-[#ece4d8]">
-            <Clock className="w-4 h-4 text-[#c59d5f]" />
-            <span>Open 11:00 AM &ndash; 02:00 AM Daily</span>
+          {/* Right Column: Hero Visual & Floating Diagnostic Badges */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              
+              {/* Main Image with rounded container & soft shadow */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/15 border-4 border-white bg-slate-100 aspect-[4/5] sm:aspect-[4/5]">
+                <img
+                  src="/src/assets/images/hero_dentist_patient_1790263719277.jpg"
+                  alt="Friendly dentist in modern clinic consulting with happy patient"
+                  className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    // Fallback to stylized SVG placeholder if asset missing
+                    (e.target as HTMLElement).style.display = 'none';
+                  }}
+                />
+                
+                {/* Visual Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A2558]/50 via-transparent to-transparent pointer-events-none" />
+
+                {/* Subtitle tag inside media */}
+                <div className="absolute bottom-4 left-4 right-4 text-white text-xs p-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/20">
+                  <p className="font-semibold text-white">Diagnostic Precision &amp; Painless Care</p>
+                  <p className="text-slate-200 text-[11px] truncate">
+                    High-resolution digital imaging &amp; gentle water-spray scaling
+                  </p>
+                </div>
+              </div>
+
+              {/* Floating Badge 1: 58,900+ Treatments */}
+              <div className="absolute -top-4 -left-4 sm:-left-6 bg-white p-3.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 animate-bounce-subtle">
+                <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold">
+                  <Activity className="w-5 h-5 text-teal-600" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-900 font-display">58,900+</p>
+                  <p className="text-[11px] text-slate-500 font-medium">Successful Treatments</p>
+                </div>
+              </div>
+
+              {/* Floating Badge 2: Doctor Available Today */}
+              <div className="absolute -bottom-5 -right-3 sm:-right-6 bg-white p-3.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0A2558] flex items-center justify-center">
+                  <ShieldCheck className="w-5 h-5 text-[#0A2558]" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                    <span className="text-xs font-bold text-slate-900">4 Specialists Available</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-medium">Same-Day Diagnostic Slots</p>
+                </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <a
-            href="#sec5"
-            id="hero-book-table-btn"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-sm bg-[#c59d5f] text-[#121110] font-semibold text-xs sm:text-sm uppercase tracking-[0.16em] hover:bg-[#d4af72] hover:shadow-[0_0_25px_rgba(197,157,95,0.4)] transition-all flex items-center justify-center gap-2.5"
-          >
-            <Calendar className="w-4 h-4" />
-            <span>Make a Reservation</span>
-          </a>
-
-          <a
-            href="#sec3"
-            id="hero-explore-menu-btn"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-sm border border-[#c59d5f]/60 text-[#f0e7dc] hover:text-[#121110] hover:bg-[#c59d5f] font-semibold text-xs sm:text-sm uppercase tracking-[0.16em] transition-all flex items-center justify-center"
-          >
-            <span>Explore Menu</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll Down Arrow Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <a 
-          href="#sec2" 
-          id="hero-scroll-link"
-          aria-label="Scroll to about section"
-          className="flex flex-col items-center gap-1 text-[#c59d5f] hover:text-white transition-colors group p-2"
-        >
-          <span className="text-[10px] tracking-[0.25em] uppercase text-[#887f73] group-hover:text-[#c59d5f] transition-colors">
-            Discover
-          </span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
-        </a>
       </div>
     </section>
   );

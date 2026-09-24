@@ -1,166 +1,184 @@
 import React, { useState } from 'react';
-import { ArrowUp, Utensils, Facebook, Instagram, Phone, Mail, CheckCircle2, Heart } from 'lucide-react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { 
+  Sparkles, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Clock, 
+  ShieldCheck, 
+  Send, 
+  Check 
+} from 'lucide-react';
+import { CLINIC_INFO } from '../data/dentalData';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenBooking: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenBooking }) => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newsletterEmail) {
-      setSubscribed(true);
+    if (!newsletterEmail) return;
+    setSubscribed(true);
+    setTimeout(() => {
       setNewsletterEmail('');
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      setSubscribed(false);
+    }, 3500);
   };
 
   return (
-    <footer className="bg-[#0b0a09] text-[#a49988] border-t border-[#221e1a] pt-16 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#201c18]">
-          {/* Column 1: About Two Spoons */}
-          <div className="md:col-span-4 space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full border border-[#c59d5f]/60 flex items-center justify-center bg-[#181512] text-[#c59d5f]">
-                <Utensils className="w-3.5 h-3.5" />
-              </div>
-              <span className="font-display tracking-[0.2em] text-lg font-bold text-[#f2ece2]">
-                TWO SPOONS
-              </span>
-            </div>
-
-            <p className="text-sm text-[#958a7b] leading-relaxed">
-              Two Spoons began in Chittagong and opened in Uttara, Dhaka in October. A continental kitchen and chocolate cafe on Gareeb-e-Nawaz Avenue, open 11 AM to 2 AM every day.
+    <footer className="bg-[#071A3D] text-slate-300 pt-16 pb-8 border-t border-blue-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Top Callout Banner */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#0A2558] to-[#0D418C] border border-blue-800/40 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+          <div className="space-y-1 text-center md:text-left">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-white font-display">
+              Ready for a Pain-Free Dental Consultation?
+            </h3>
+            <p className="text-xs sm:text-sm text-teal-200">
+              Check live doctor availability, pick your convenient time slot, and smile with confidence.
             </p>
-
-            <div className="pt-2 text-xs text-[#7d7365]">
-              <span className="text-[#c59d5f] font-semibold">Uttara Dhaka:</span> Plot 38, Gareeb-e-Nawaz Ave, Sector 13
-            </div>
-          </div>
-
-          {/* Column 2: Find Us & Social */}
-          <div className="md:col-span-4 space-y-4">
-            <h4 className="font-serif text-lg font-bold text-[#f5efe5] tracking-wide">
-              Find Us
-            </h4>
-
-            <p className="text-sm text-[#958a7b]">
-              Follow Two Spoons online, order direct to your door, or call ahead for a table in Sector 13.
-            </p>
-
-            <ul className="space-y-2 text-xs">
-              <li>
-                <a
-                  href={`tel:${RESTAURANT_INFO.phoneTel}`}
-                  className="flex items-center gap-2 hover:text-[#c59d5f] transition-colors py-1"
-                >
-                  <Phone className="w-3.5 h-3.5 text-[#c59d5f]" />
-                  <span>Call: {RESTAURANT_INFO.phone}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={RESTAURANT_INFO.facebook}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 hover:text-[#c59d5f] transition-colors py-1"
-                >
-                  <Facebook className="w-3.5 h-3.5 text-[#c59d5f]" />
-                  <span>Facebook (Uttara)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={RESTAURANT_INFO.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 hover:text-[#c59d5f] transition-colors py-1"
-                >
-                  <Instagram className="w-3.5 h-3.5 text-[#c59d5f]" />
-                  <span>Instagram (@twospoons.dhk)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={RESTAURANT_INFO.foodpanda}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 text-[#ff4b82] hover:underline font-medium py-1"
-                >
-                  <Utensils className="w-3.5 h-3.5" />
-                  <span>Order on Foodpanda</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Newsletter */}
-          <div className="md:col-span-4 space-y-4">
-            <h4 className="font-serif text-lg font-bold text-[#f5efe5] tracking-wide">
-              Seasonal Specials
-            </h4>
-
-            <p className="text-sm text-[#958a7b]">
-              Want to hear about seasonal dishes and chocolate cafe specials? Leave your email below.
-            </p>
-
-            {subscribed ? (
-              <div className="p-3.5 rounded-md bg-[#181613] border border-[#c59d5f]/50 flex items-center gap-2 text-xs text-[#c59d5f]">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>Thank you! You are on our VIP list.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <div className="relative flex-1">
-                  <Mail className="w-4 h-4 text-[#6e6457] absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="email"
-                    required
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="Your email address"
-                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-sm bg-[#171412] border border-[#302b23] text-white placeholder-[#685e50] focus:border-[#c59d5f] focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  id="footer-subscribe-btn"
-                  className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-sm bg-[#c59d5f] text-[#121110] hover:bg-[#d4af72] transition-colors shrink-0"
-                >
-                  Join
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#70675a]">
-          <div>
-            &copy; Two Spoons {new Date().getFullYear()} . All rights reserved. &bull; Uttara, Dhaka
-          </div>
-
-          <div className="flex items-center gap-1">
-            <span>Crafted with</span>
-            <Heart className="w-3 h-3 text-[#c59d5f] fill-current" />
-            <span>for continental cuisine &amp; chocolate lovers</span>
           </div>
 
           <button
-            type="button"
-            onClick={scrollToTop}
-            id="footer-back-to-top"
-            aria-label="Back to top of page"
-            className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#a89d8d] hover:text-[#c59d5f] transition-colors p-1"
+            onClick={onOpenBooking}
+            className="px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-900/30 transition-all cursor-pointer whitespace-nowrap"
           >
-            <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+            Book An Appointment
           </button>
         </div>
+
+        {/* 4 Main Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-blue-900/40 text-xs">
+          
+          {/* Column 1: Brand Info (col-span-4) */}
+          <div className="lg:col-span-4 space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-teal-500 text-white flex items-center justify-center font-bold shadow-sm">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <span className="text-xl font-extrabold tracking-tight text-white font-display">
+                  Smilico
+                </span>
+                <p className="text-[10px] tracking-wider uppercase text-teal-300 font-semibold -mt-1">
+                  Dental &amp; Diagnostic Care
+                </p>
+              </div>
+            </div>
+
+            <p className="text-slate-400 leading-relaxed pr-4">
+              Caring for your smile with advanced 3D digital dental diagnostics, ultrasonic painless scaling, clear aligners, and patient-first clinical excellence.
+            </p>
+
+            <div className="pt-2 space-y-1.5 text-slate-400">
+              <p className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                <span>{CLINIC_INFO.address}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                <span>{CLINIC_INFO.phone}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                <span>{CLINIC_INFO.email}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links (col-span-2) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider font-display">
+              Quick Links
+            </h4>
+            <ul className="space-y-2 text-slate-400">
+              <li><a href="#services" className="hover:text-white transition-colors">Dental Services</a></li>
+              <li><a href="#video-procedures" className="hover:text-white transition-colors">Video Guides</a></li>
+              <li><a href="#doctors" className="hover:text-white transition-colors">Doctor Roster</a></li>
+              <li><a href="#appointment-booking" className="hover:text-white transition-colors">Live Schedule</a></li>
+              <li><a href="#before-after" className="hover:text-white transition-colors">Real Results</a></li>
+              <li><a href="#reviews" className="hover:text-white transition-colors">Patient Reviews</a></li>
+              <li><a href="#faqs" className="hover:text-white transition-colors">Common FAQs</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Clinical Services (col-span-3) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider font-display">
+              Treatments
+            </h4>
+            <ul className="space-y-2 text-slate-400">
+              <li><a href="#services" className="hover:text-white transition-colors">Ultrasonic Teeth Scaling</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Teeth Cleaning &amp; Air Polishing</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Clear Aligners &amp; Braces</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Guided Dental Implants</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Laser Teeth Whitening</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Painless Root Canal Therapy</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">3D CBCT Bone Tomography</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter & Hours (col-span-3) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider font-display">
+              Oral Health Tips
+            </h4>
+            <p className="text-slate-400 text-xs leading-relaxed">
+              Subscribe to receive dentist-approved oral hygiene tips, scaling reminders, and seasonal smile care promotions.
+            </p>
+
+            {subscribed ? (
+              <div className="p-3 bg-teal-900/50 border border-teal-600 rounded-xl text-teal-200 text-xs flex items-center gap-2">
+                <Check className="w-4 h-4 text-teal-400" />
+                <span>Thank you for subscribing!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="w-full px-3 py-2 bg-blue-950/60 border border-blue-800/60 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-1.5 top-1.5 px-2.5 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-semibold cursor-pointer"
+                  >
+                    Join
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="pt-2 text-slate-400 text-[11px] space-y-1">
+              <p><strong className="text-slate-200">Mon - Fri:</strong> 8:00 AM – 7:30 PM</p>
+              <p><strong className="text-slate-200">Saturday:</strong> 9:00 AM – 5:00 PM</p>
+              <p><strong className="text-teal-400">Emergency:</strong> 24/7 Trauma Service</p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Bar: Copyright & Terms */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>© {new Date().getFullYear()} Smilico Dental &amp; Diagnostic Care. All Rights Reserved.</p>
+          <div className="flex items-center gap-4 text-slate-400">
+            <span className="hover:text-white cursor-pointer">Privacy Policy</span>
+            <span>·</span>
+            <span className="hover:text-white cursor-pointer">Patient Bill of Rights</span>
+            <span>·</span>
+            <span className="hover:text-white cursor-pointer">HIPAA Compliance</span>
+          </div>
+        </div>
+
       </div>
     </footer>
   );

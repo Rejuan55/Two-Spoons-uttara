@@ -1,6 +1,6 @@
 {
-  "name": "Two Spoons Uttara - Restaurant & Chocolate Cafe",
-  "description": "Two Spoons Uttara - a restaurant and chocolate cafe on Gareeb-e-Nawaz Avenue, Sector 13, Uttara, Dhaka. Continental food, steaks, pasta, crepes and waffles. Open 11 AM to 2 AM. Rated 4.3 on Google.",
+  "name": "Smilico - Modern Dental Clinic & Diagnostic Care",
+  "description": "Smilico Dental & Diagnostic Care - Premier dental clinic offering gentle, advanced dentistry: 3D diagnostics, teeth cleaning, ultrasonic scaling, dental implants, aligners, and real-time doctor availability booking.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
